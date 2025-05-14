@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+        <title>{% block title %}Home{% endblock title %}</title>
+    </head>
+    <body>
+        <main>
+        {% if user.is_authenticated %}
+            <div id="flex-end-container">
+                <form method="post" action="{% url 'auth:logout' %}">
+                    {% csrf_token %}
+                    <button class="btn-gradient-radius" type="submit">Log Out</button>
+                </form>
+            </div>
+        {% endif %}
+        {% block content %}{% endblock content%}
+        </main>
+    </body>
+</html>

@@ -1,0 +1,55 @@
+{% extends 'base.html'%}
+
+{% block title %}Task List{% endblock title%}
+
+{% block content %}
+<h2>Task List</h2>
+<div id="flex-end-container" class="margin-b1">
+    <a href="{% url 'task_create' %}"><button class="btn-gradient-radius">Add Task</button></a>
+    <br />
+</div>
+<form method="get" class="margin-b1">
+    {% csrf_token %}
+    <input type="text" name="search" placeholder="Search tasks..." value="{{ request.GET.search }}">
+    <select name="ordering">
+        <option value="">Ordering</option>
+        <option value="created_at" {% if request.GET.ordering == "created_at" %}selected{% endif %}>Create Date(Asc)</option>
+        <option value="-created_at" {% if request.GET.ordering == "-created_at" %}selected{% endif %}>Create Date(Desc)</option>
+        <option value="due_date" {% if request.GET.ordering == "due_date" %}selected{% endif %}>Due Date(Asc)</option>
+        <option value="-due_date" {% if request.GET.ordering == "-due_date" %}selected{% endif %}>Due Date(Desc)</option>
+    </select>
+    <button class="btn-gradient-radius" type="submit">Search & Sort</button>
+</form>
+{% for task in todo_list %}
+<div class="task-container">
+    <label id="task">
+        <input type="checkbox" {% if task.completed %}checked{% endif %} disabled>
+        {% if task.completed %}
+            <del><span>{{ task.task }}</span></del>
+        {% else %}
+            {% if task.overdue %}<strong class="color-red">{% endif %}<span>{{ task.task }}</span>{% if task.overdue %}</strong>{% endif %}
+        {% endif %}
+        <small>
+            {% if task.due_date %}
+            {{ task.due_date|date:"- m/d" }}
+            {% endif %}
+        </small>
+    </label>
+    <form method="post" action="{% url 'task_toggle' task.pk %}">
+      {% csrf_token %}
+      <button class="btn-gradient-radius" type="submit">
+        {% if task.completed %}Incomplete{% else %}Complete{% endif %}
+      </button>
+    </form>
+    <a href="{% url 'task_update' task.id %}"><button class="btn-gradient-radius">Edit</button></a>
+    <a href="{% url 'task_delete' task.id %}"><button class="btn-gradient-radius">Delete</button></a>
+</div>
+{% endfor %}
+<form method="post" action="{% url 'completed_tasks_delete' %}">
+    {% csrf_token %}
+    <button type="submit" class="margin-t1 btn-gradient-radius">Delete Completed Tasks</button>
+</form>
+{% if request.GET.search %}
+<p class="margin-t1"><a href="{% url 'task_list' %}">Back to Task List</a></p>
+{% endif %}
+{% endblock content %}
