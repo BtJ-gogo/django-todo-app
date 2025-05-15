@@ -29,4 +29,4 @@ DjangoとDjango REST Frameworkを使用し、WebアプリとAPIの両方を実�
 | POST | /api/tasks/  |  タスク作成   | 
 | GET | /api/tasks/{id}/  |   タスク詳細の取得  |
 | PATCH | /api/tasks/{id}/  |   タスク編集  | 
-| DELTE | /api/tasks/{id}/  |   タスク削除  | 
+| DELETE | /api/tasks/{id}/  |   タスク削除  | 
