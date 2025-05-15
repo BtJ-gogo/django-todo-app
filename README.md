@@ -22,6 +22,9 @@ DjangoとDjango REST Frameworkを使用し、WebアプリとAPIの両方を実�
 ## APIエンドポイント
 |  メソッド   |  エンドポイント  |  説明  | 
 | --- | --- | --- | 
+| POST | /api/auth/users/  |  ユーザー登録   | 
+| POST | /api/auth/token/login/  |  ログイン（トークン取得）   | 
+| POST | /api/auth/token/logout/  |  ログアウト   | 
 | GET | /api/tasks/  |  タスク一覧取得   | 
 | POST | /api/tasks/  |  タスク作成   | 
 | GET | /api/tasks/{id}/  |   タスク詳細の取得  |
