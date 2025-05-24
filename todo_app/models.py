@@ -16,7 +16,7 @@ class Todo(models.Model):
         return f"{self.task} - {self.user.username}"
 
     def get_absolute_url(self):
-        return reverse("tod_detail", kwargs={"pk": self.pk})
+        return reverse("task_update", kwargs={"pk": self.pk})
 
     class Meta:
         ordering = ["completed", "-created_at"]
